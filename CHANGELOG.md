@@ -1,3 +1,7 @@
+## 4.0.6 - 2024-05-08
+### Added
+- French translations (via @pascalminator)
+
 ## 4.0.5 - 2024-04-04
 ### Fixed
 - Fix referred on Mapbox geo requests (Fixes #338, via @maxdmyers)
