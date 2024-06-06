@@ -373,19 +373,24 @@ class MapService extends Component
 		];
 
 		// Filter the query
-		$query
-			->subQuery
-			->addSelect($search . ' as [[mapsCalculatedDistance]]')
+		$subQuery = $query->subQuery;
+		$isCount = count($query->select) == 1 && array_values($query->select)[0] == 'COUNT(*)';
+
+		if (!$isCount)
+			$subQuery
+				->addSelect($search . ' as [[mapsCalculatedDistance]]');
+
+		$subQuery
 			->andWhere($restrict)
 			->andWhere([
 				'not',
 				['[[' . $table . '.lat]]' => null],
 			]);
 
-		if (Craft::$app->getDb()->driverName === 'pgsql')
-			$query->subQuery->andWhere($search . ' <= ' . $radius);
+		if (Craft::$app->getDb()->driverName === 'pgsql' || $isCount)
+			$subQuery->andWhere($search . ' <= ' . $radius);
 		else
-			$query->subQuery->andHaving('[[mapsCalculatedDistance]] <= ' . $radius);
+			$subQuery->andHaving('[[mapsCalculatedDistance]] <= ' . $radius);
 
 		return '[[mapsCalculatedDistance]]';
 	}

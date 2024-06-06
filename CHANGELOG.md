@@ -1,3 +1,7 @@
+## 4.0.7 - 2024-06-06
+### Fixed
+- Fix issue when using count query on location search results (Fixes #391)
+
 ## 4.0.6 - 2024-05-08
 ### Added
 - French translations (via @pascalminator)
